@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日の運勢おみくじ</title>
+    <style>
+        body { 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            background-color: #fce4ec; /* 少し和風な薄いピンク */
+            color: #333; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .omikuji-box { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+            text-align: center; 
+            width: 300px;
+            border: 4px solid #c2185b; /* 神社っぽい赤紫 */
+        }
+        h1 { 
+            color: #c2185b; 
+            margin-top: 0;
+            font-size: 24px;
+        }
+        #result { 
+            font-size: 48px; 
+            font-weight: bold; 
+            color: #d32f2f; 
+            margin: 30px 0; 
+            min-height: 70px;
+        }
+        #message {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
+            min-height: 48px;
+        }
+        button { 
+            background-color: #c2185b; 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            border-radius: 25px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            width: 100%;
+        }
+        button:hover { 
+            background-color: #ad1457; 
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
 
+<div class="omikuji-box">
+    <h1>⛩️ おみくじ ⛩️</h1>
+    <div id="result">？？？</div>
+    <div id="message">ボタンを押して運勢を占おう！</div>
+    <button id="draw-btn">おみくじを引く！</button>
+</div>
+
+<script>
+    // おみくじのデータ（運勢と、一言メッセージのセット）
+    const omikujiData = [
+        { luck: "大吉", message: "絶好調の一日！新しいことに挑戦してみよう。" },
+        { luck: "中吉", message: "良いことがありそう。笑顔を心がけて。" },
+        { luck: "小吉", message: "ささやかな幸せが見つかるかも。" },
+        { luck: "吉", message: "穏やかで平和な一日になるでしょう。" },
+        { luck: "末吉", message: "焦らずじっくり取り組むと吉。" },
+        { luck: "凶", message: "注意深く行動しよう。忘れ物に気をつけて。" },
+        { luck: "大凶", message: "無理は禁物。今日はゆっくり休もう。" }
+    ];
+
+    const btn = document.getElementById('draw-btn');
+    const resultDiv = document.getElementById('result');
+    const messageDiv = document.getElementById('message');
+
+    // ボタンがクリックされた時の処理
+    btn.addEventListener('click', () => {
+        // おみくじを引いている演出（少し待たせる）
+        resultDiv.textContent = "祈願中...";
+        messageDiv.textContent = "";
+        btn.disabled = true; // 連打防止のためにボタンを無効化
+
+        setTimeout(() => {
+            // 0 から omikujiDataの数-1 までのランダムな数字を作る
+            const randomIndex = Math.floor(Math.random() * omikujiData.length);
+            const result = omikujiData[randomIndex];
+
+            // 結果を画面に表示する
+            resultDiv.textContent = result.luck;
+            messageDiv.textContent = result.message;
+            btn.disabled = false; // ボタンを再び押せるようにする
+        }, 800); // 0.8秒後に結果を表示
+    });
+</script>
+
+</body>
+</html>
